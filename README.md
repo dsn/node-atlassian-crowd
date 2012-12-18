@@ -1,10 +1,12 @@
 # Atlassian Crowd Library for node.js #
-A node.js module for interacting with the Atlassian Crowd asynchronously.
+A node.js module for interacting with the Atlassian Crowd.
+
+Provides the ability to Add, Remove, and Manage Users and Groups as well as SSO functionality.
 
 ## Getting Started ##
 In order to use this module you will first need to configure an application in Atlassian Crowd and Configure the Remote IP Address.
 
-See the [Atlassian Crowd Documentation (Adding and Application)](https://confluence.atlassian.com/display/CROWD/Adding+an+Application#AddinganApplication-add) for assistance.
+See the [Atlassian Crowd Documentation (Adding an Application)](https://confluence.atlassian.com/display/CROWD/Adding+an+Application#AddinganApplication-add) for assistance.
 
 ## Usage ##
 ```javascript
@@ -26,22 +28,42 @@ var crowd = new AtlassianCrowd(options);
 ### Options ###
 If you do not know these please ask your systems administrator.
 
-`application.name` Application name as configured in Atlassian Crowd
-`application.password` Application name as configured in Atlassian Crowd
-`crowd.baseurl` Atlassian Crowd Base URL
-`crowd.port` Atlassian Crowd Port
+`application.name` Application name as configured in Atlassian Crowd  
+`application.password` Application name as configured in Atlassian Crowd  
+`crowd.baseurl` Atlassian Crowd Base URL  
+`crowd.port` Atlassian Crowd Port  
 
 ## API ##
 
-### User Functions ###
-Functions for interacting with a user account.
+### Testing Configuration and Connectivity ###
+A simple function to check connectivity to Atlassian Crowd.
 
-#### Find a User by Username ####
-user.find(userrname, callback)
-Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the user.
+ping(callback)
+
+* callback Function (err, res)
 
 ```javascript
-crowd.user.find('test', function(err, res) {
+crowd.ping(function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res)
+  }
+});
+```
+
+### User Related Functions ###
+Here you can find utilities for Managing, Creating, Removing, Users as well as Changing Passwords, and Basic Authentication (NON SSO).
+
+#### Finding a User by Username ####
+user.find(userrname, callback)
+
+* username String
+* callback Function (err, res)
+
+```javascript
+crowd.user.find('user', function(err, res) {
   if(err) { 
     throw err;
    }
@@ -51,39 +73,11 @@ crowd.user.find('test', function(err, res) {
 });
 ```
 
-#### Create a User ####
-user.create(firstname, lastname, displayname, email, username, password, callback)  
-Callback contains one possible value which is an error object if the operation was not successful.
-
-```javascript
-crowd.user.create('test', 'user', 'Test User', 'test@foo.bar', 'testuser', 'password', function(err) {
-  if(err) { 
-    throw err;
-  }
-  else {
-    console.log("Success")
-  }
-});
-```
-
-#### Delete a User ####
-user.remove(username, callback)  
-Callback contains one possible value which is an error object if the operation was not successful.
-
-```javascript
-crowd.user.remove('testuser', function(err) {
-  if(err) { 
-    throw err;
-  }
-  else {
-    console.log("Success")
-  }
-});
-```
-
-#### Check if User is Active ####
+#### Checking if User is Active ####
 user.active(username, callback)  
-Callback contains two possible values. The first is an error obiect if the operation was not successful and the second is a Boolean
+
+* username String
+* callback Function (err, res)
 
 ```javascript
 crowd.user.active('user', function (err, res) {
@@ -96,12 +90,53 @@ crowd.user.active('user', function (err, res) {
 });
 ```
 
-#### User Group Membership ####
-user.groups(username, callback)  
-Callback contains two possible values. The first is an error obiect if the operation was not successful and the second is an Array of Group Names
+#### Creating a User ####
+user.create(firstname, lastname, displayname, email, username, password, callback)  
+
+* firstname String
+* lastname String
+* displayname String
+* email String
+* username String
+* password String
+* callback Function (err)
 
 ```javascript
-crowd.user.groups(username, function (err, res) {
+crowd.user.create('Test', 'User', 'Test User', 'test@foo.bar', 'testuser', 'abc123', function(err) {
+  if(err) { 
+    throw err;
+  }
+  else {
+    console.log("Success")
+  }
+});
+```
+
+#### Removing a User ####
+user.remove(username, callback)  
+
+* username String
+* callback Function (err)
+
+```javascript
+crowd.user.remove('testuser', function(err) {
+  if(err) { 
+    throw err;
+  }
+  else {
+    console.log("Success")
+  }
+});
+```
+
+#### List a Users Group Membership ####
+user.groups(username, callback)  
+
+* username String
+* callback Function (err, res)
+
+```javascript
+crowd.user.groups('testuser', function (err, res) {
   if(err) {
     throw err;
   }
@@ -111,12 +146,15 @@ crowd.user.groups(username, function (err, res) {
 });
 ```
 
-#### Authentication ####
+#### User Authentication (NON SSO) ####
 user.authenticate(username, password, callback)  
-Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the user
+
+* username String
+* password String
+* callback Function (err, res)
 
 ```javascript
-crowd.user.authenticate('user', 'password', function(err, res) {
+crowd.user.authenticate('testuser', 'abc123', function(err, res) {
   if(err) { 
     throw err;
    }
@@ -126,17 +164,32 @@ crowd.user.authenticate('user', 'password', function(err, res) {
 });
 ```
 
+#### Changing a Users Password ####
+user.changepassword(username, newpassword)
+
+* username String
+* newpassword String
+* callback Function (err)
+
+```javascript
+crowd.user.changepassword('testuser', 'newpass', function (err) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log("Success");
+  }
+});
+```
+
 ### Group Functions ###
+Here you can find utilities for Managing, Creating, and Removing Groups.  
 
-#### Find ####
-group.find(groupname, callback)  
+#### Finding a Group ####
+groups.find(groupname, callback)  
 
-```
-@param groupname String  
-@param callback Function  
-@callbackparam Error  
-@callbackparam Response  
-```
+* groupname String
+* callback Function (err, res)
 
 ```javascript
 crowd.groups.find('crowd-administrators', function (err, res) {
@@ -149,12 +202,15 @@ crowd.groups.find('crowd-administrators', function (err, res) {
 });
 ```
 
-#### Create ####
-group.create(name, description, callback)
-Callback contains one possible value which is an error object if the operation was not successful.
+#### Creating a Group ####
+groups.create(name, description, callback)
+
+* name String
+* description String
+* callback Function (err)
 
 ```javascript
-crowd.groups.create("test-group", "Test Description", function(err) {
+crowd.groups.create('test-group', 'Test Description', function(err) {
   if(err) {
     throw err;
   }
@@ -164,8 +220,72 @@ crowd.groups.create("test-group", "Test Description", function(err) {
 });
 ```
 
-#### Remove ####
-group.remove(name, callback)
+#### Removing a Group ####
+groups.remove(name, callback)
+
+* name String
+* callback Function (err)
+
+```javascript
+crowd.groups.remove('test-group', function (err) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log("Success");
+  }
+```
+
+#### Adding a User to a Group ####
+groups.addmember(username, group, callback)
+
+* username String
+* group String
+* callback Function (err)
+
+```javascript
+crowd.groups.addmember('testuser', 'test-group', function (err) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log("Success");
+  }
+});
+```
+
+#### Removing a User from a Group ####
+groups.removemember(username, group, callback)
+
+* username String
+* group String
+* callback Function (err)
+
+```javascript
+crowd.groups.removemember('testuser', 'test-group', function (err) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log("Success");
+  }
+});
+```
+
+#### Find the Direct Members of a Group ####
+
+#### Find the Nested Members of a Group ####
+
+### Session Functions ###
+Provides SSO Functionality
+
+#### Create a new Session ####
+
+#### Authenticate ####
+
+#### Destroy ####
+
+
 
 ## TODO ##
 * Finish Docs
