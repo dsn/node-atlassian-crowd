@@ -7,7 +7,7 @@ In order to use this module you will first need to configure an application in A
 See the [Atlassian Crowd Documentation (Adding and Application)](https://confluence.atlassian.com/display/CROWD/Adding+an+Application#AddinganApplication-add) for assistance.
 
 ## Usage ##
-<pre>
+```javascript
 var AtlassianCrowd = require('atlassian-crowd');
 var options = {
   "crowd": {
@@ -21,18 +21,15 @@ var options = {
 }
 
 var crowd = new AtlassianCrowd(options);
-</pre>
+```
 
 ### Options ###
 If you do not know these please ask your systems administrator.
 
-#### Required Settings ####
 `application.name` Application name as configured in Atlassian Crowd
 `application.password` Application name as configured in Atlassian Crowd
-`crowd.baseurl` Atlassian Crowd Base URL (Example http://crowd.localhost.com or http://localhost/context/)
-
-#### Optional Settings ####
-`crowd.port` If you have Crowd running on a port other than 80 or 443 specify the port number here
+`crowd.baseurl` Atlassian Crowd Base URL
+`crowd.port` Atlassian Crowd Port
 
 ## API ##
 
@@ -43,7 +40,7 @@ Functions for interacting with a user account.
 user.find(userrname, callback)
 Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the user.
 
-<pre>
+```javascript
 crowd.user.find('test', function(err, res) {
   if(err) { 
     throw err;
@@ -52,13 +49,13 @@ crowd.user.find('test', function(err, res) {
     console.log(res);
   }
 });
-</pre>
+```
 
 #### Create a User ####
 user.create(firstname, lastname, displayname, email, username, password, callback)  
 Callback contains one possible value which is an error object if the operation was not successful.
 
-<pre>
+```javascript
 crowd.user.create('test', 'user', 'Test User', 'test@foo.bar', 'testuser', 'password', function(err) {
   if(err) { 
     throw err;
@@ -67,13 +64,13 @@ crowd.user.create('test', 'user', 'Test User', 'test@foo.bar', 'testuser', 'pass
     console.log("Success")
   }
 });
-</pre>
+```
 
 #### Delete a User ####
 user.remove(username, callback)  
 Callback contains one possible value which is an error object if the operation was not successful.
 
-<pre>
+```javascript
 crowd.user.remove('testuser', function(err) {
   if(err) { 
     throw err;
@@ -82,13 +79,13 @@ crowd.user.remove('testuser', function(err) {
     console.log("Success")
   }
 });
-</pre>
+```
 
-### Check if User is Active ###
+#### Check if User is Active ####
 user.active(username, callback)  
 Callback contains two possible values. The first is an error obiect if the operation was not successful and the second is a Boolean
 
-<pre>
+```javascript
 crowd.user.active('user', function (err, res) {
   if(err) {
     throw err;
@@ -97,13 +94,13 @@ crowd.user.active('user', function (err, res) {
     console.log(res.toString());
   }
 });
-</pre>
+```
 
-### User Group Membership ###
+#### User Group Membership ####
 user.groups(username, callback)  
 Callback contains two possible values. The first is an error obiect if the operation was not successful and the second is an Array of Group Names
 
-<pre>
+```javascript
 crowd.user.groups(username, function (err, res) {
   if(err) {
     throw err;
@@ -112,13 +109,13 @@ crowd.user.groups(username, function (err, res) {
     console.log(res);
   }
 });
-</pre>
+```
 
 #### Authentication ####
 user.authenticate(username, password, callback)  
 Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the user
 
-<pre>
+```javascript
 crowd.user.authenticate('user', 'password', function(err, res) {
   if(err) { 
     throw err;
@@ -127,15 +124,21 @@ crowd.user.authenticate('user', 'password', function(err, res) {
     console.log(res);
   }
 });
-</pre>
+```
 
 ### Group Functions ###
 
-### Find ###
+#### Find ####
 group.find(groupname, callback)  
-Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the group
 
-<pre>
+```
+@param groupname String  
+@param callback Function  
+@callbackparam Error  
+@callbackparam Response  
+```
+
+```javascript
 crowd.groups.find('crowd-administrators', function (err, res) {
   if(err) {
     throw err;
@@ -144,13 +147,13 @@ crowd.groups.find('crowd-administrators', function (err, res) {
     console.log(res);
   }
 });
-</pre>
+```
 
-### Create ###
-group.create(name, description)
+#### Create ####
+group.create(name, description, callback)
 Callback contains one possible value which is an error object if the operation was not successful.
 
-<pre>
+```javascript
 crowd.groups.create("test-group", "Test Description", function(err) {
   if(err) {
     throw err;
@@ -159,8 +162,11 @@ crowd.groups.create("test-group", "Test Description", function(err) {
     console.log("Success");
   }
 });
-</pre>
+```
 
-# TODO #
+#### Remove ####
+group.remove(name, callback)
+
+## TODO ##
 * Finish Docs
 * Update User Profile
