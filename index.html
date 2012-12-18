@@ -38,7 +38,7 @@
           <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
         </div>
 
-        <h1>Atlassian Crowd Library for node.js</h1>
+        <h1>Atlassian Crowd Client for node.js</h1>
 
 <p>A node.js module for interacting with the Atlassian Crowd.</p>
 
@@ -75,7 +75,7 @@
 
 <h2>API</h2>
 
-<h3>Testing Configuration and Connectivity</h3>
+<h4>Testing Configuration and Connectivity</h4>
 
 <p>A simple function to check connectivity to Atlassian Crowd.</p>
 
@@ -89,6 +89,39 @@
   <span class="p">}</span>
   <span class="k">else</span> <span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4>Search Users or Groups</h4>
+
+<p>Uses the Crowd Query Language<br>
+See <a href="https://developer.atlassian.com/display/CROWDDEV/Crowd+Query+Language">Crowd Query Language Documenation</a> for more details<br>
+search(entityType, query, callback)</p>
+
+<ul>
+<li>entityType String 'user' or 'group'</li>
+<li>query String Crowd Query</li>
+</ul><h4>Search Users</h4>
+
+<div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="s1">'firstName="test*"'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h5>Search Groups</h5>
+
+<div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s1">'group'</span><span class="p">,</span> <span class="s1">'name="*test*"'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">});</span>
 </pre></div>
