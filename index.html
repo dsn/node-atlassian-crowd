@@ -66,19 +66,16 @@ var options = {
 var crowd = new AtlassianCrowd(options);
 </pre>
 
-<h3>Options</h3>
+<h3>Options:</h3>
 
-<p>If you do not know these please ask your systems administrator.</p>
+<p>If you do not know these please ask your Atlassian Crowd Administrator.</p>
 
-<h4>Required Settings</h4>
-
-<p><code>application.name</code> Application name as configured in Atlassian Crowd
-<code>application.password</code> Application name as configured in Atlassian Crowd
-<code>crowd.baseurl</code> Atlassian Crowd Base URL (Example <a href="http://crowd.localhost.com">http://crowd.localhost.com</a> or http://localhost/context/)</p>
-
-<h4>Optional Settings</h4>
-
-<p><code>crowd.port</code> If you have Crowd running on a port other than 80 or 443 specify the port number here</p>
+<p>
+<code>application.name</code> Application name as configured in Atlassian Crowd<br>
+<code>application.password</code> Application name as configured in Atlassian Crowd<br>
+<code>crowd.baseurl</code> Atlassian Crowd Base URL<br>
+<code>crowd.port</code> Port Atlassian Crowd is Listening for Connections on
+</p>
 
 <h2>API</h2>
 
@@ -97,7 +94,7 @@ crowd.user.find('test', function(err, res) {
     throw err;
    }
   else {
-    console.log(res);
+    console.log(util.inspect(res, true));
   }
 });
 </pre>
@@ -177,7 +174,7 @@ crowd.user.authenticate('user', 'password', function(err, res) {
     throw err;
    }
   else {
-    console.log(res);
+    console.log(util.inspect(res, true));
   }
 });
 </pre>
@@ -190,14 +187,16 @@ crowd.user.authenticate('user', 'password', function(err, res) {
 Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the group</p>
 
 <pre>
+<code>
 crowd.groups.find('crowd-administrators', function (err, res) {
   if(err) {
     throw err;
   }
   else {
-    console.log(res);
+    console.log(util.inspect(res, true));
   }
 });
+</code>
 </pre>
 
 <h3>Create</h3>
