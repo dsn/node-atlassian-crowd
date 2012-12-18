@@ -163,7 +163,4 @@ crowd.groups.create("test-group", "Test Description", function(err) {
 
 # TODO #
 * Finish Docs
-* Session Functions (SSO)
-* Password Change
-* Password Reset
 * Update User Profile
