@@ -40,182 +40,295 @@
 
         <h1>Atlassian Crowd Library for node.js</h1>
 
-<p>A node.js module for interacting with the Atlassian Crowd asynchronously.</p>
+<p>A node.js module for interacting with the Atlassian Crowd.</p>
+
+<p>Provides the ability to Add, Remove, and Manage Users and Groups as well as SSO functionality.</p>
 
 <h2>Getting Started</h2>
 
 <p>In order to use this module you will first need to configure an application in Atlassian Crowd and Configure the Remote IP Address.</p>
 
-<p>See the <a href="https://confluence.atlassian.com/display/CROWD/Adding+an+Application#AddinganApplication-add">Atlassian Crowd Documentation (Adding and Application)</a> for assistance.</p>
+<p>See the <a href="https://confluence.atlassian.com/display/CROWD/Adding+an+Application#AddinganApplication-add">Atlassian Crowd Documentation (Adding an Application)</a> for assistance.</p>
 
 <h2>Usage</h2>
 
-<pre>
-var AtlassianCrowd = require('atlassian-crowd');
-var options = {
-  "crowd": {
-    "base": "http://localhost", 
-    "port": 8080
-  },
-  "application": {
-    "name": "my application",
-    "password": "pass123"
-  }
-}
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">AtlassianCrowd</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'atlassian-crowd'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"crowd"</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">"base"</span><span class="o">:</span> <span class="s2">"http://localhost"</span><span class="p">,</span> 
+    <span class="s2">"port"</span><span class="o">:</span> <span class="mi">8080</span>
+  <span class="p">},</span>
+  <span class="s2">"application"</span><span class="o">:</span> <span class="p">{</span>
+    <span class="s2">"name"</span><span class="o">:</span> <span class="s2">"my application"</span><span class="p">,</span>
+    <span class="s2">"password"</span><span class="o">:</span> <span class="s2">"pass123"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
 
-var crowd = new AtlassianCrowd(options);
-</pre>
+<span class="kd">var</span> <span class="nx">crowd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AtlassianCrowd</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+</pre></div>
 
-<h3>Options:</h3>
+<h3>Options</h3>
 
-<p>If you do not know these please ask your Atlassian Crowd Administrator.</p>
+<p>If you do not know these please ask your systems administrator.</p>
 
-<p>
-<code>application.name</code> Application name as configured in Atlassian Crowd<br>
-<code>application.password</code> Application name as configured in Atlassian Crowd<br>
-<code>crowd.baseurl</code> Atlassian Crowd Base URL<br>
-<code>crowd.port</code> Port Atlassian Crowd is Listening for Connections on
-</p>
+<p><code>application.name</code> Application name as configured in Atlassian Crowd<br><code>application.password</code> Application name as configured in Atlassian Crowd<br><code>crowd.baseurl</code> Atlassian Crowd Base URL<br><code>crowd.port</code> Atlassian Crowd Port  </p>
 
 <h2>API</h2>
 
-<h3>User Functions</h3>
+<h3>Testing Configuration and Connectivity</h3>
 
-<p>Functions for interacting with a user account.</p>
+<p>A simple function to check connectivity to Atlassian Crowd.</p>
 
-<h4>Find a User by Username</h4>
+<p>ping(callback)</p>
 
-<p>user.find(userrname, callback)
-Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the user.</p>
+<ul>
+<li>callback Function (err, res)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">ping</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-<pre>
-crowd.user.find('test', function(err, res) {
-  if(err) { 
-    throw err;
-   }
-  else {
-    console.log(util.inspect(res, true));
-  }
-});
-</pre>
+<h3>User Related Functions</h3>
 
-<h4>Create a User</h4>
+<p>Here you can find utilities for Managing, Creating, Removing, Users as well as Changing Passwords, and Basic Authentication (NON SSO).</p>
 
-<p>user.create(firstname, lastname, displayname, email, username, password, callback)<br>
-Callback contains one possible value which is an error object if the operation was not successful.</p>
+<h4>Finding a User by Username</h4>
 
-<pre>
-crowd.user.create('test', 'user', 'Test User', 'test@foo.bar', 'testuser', 'password', function(err) {
-  if(err) { 
-    throw err;
-  }
-  else {
-    console.log("Success")
-  }
-});
-</pre>
+<p>user.find(userrname, callback)</p>
 
-<h4>Delete a User</h4>
+<ul>
+<li>username String</li>
+<li>callback Function (err, res)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+   <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-<p>user.remove(username, callback)<br>
-Callback contains one possible value which is an error object if the operation was not successful.</p>
+<h4>Checking if User is Active</h4>
 
-<pre>
-crowd.user.remove('testuser', function(err) {
-  if(err) { 
-    throw err;
-  }
-  else {
-    console.log("Success")
-  }
-});
-</pre>
+<p>user.active(username, callback)  </p>
 
-<h3>Check if User is Active</h3>
+<ul>
+<li>username String</li>
+<li>callback Function (err, res)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">active</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-<p>user.active(username, callback)<br>
-Callback contains two possible values. The first is an error obiect if the operation was not successful and the second is a Boolean</p>
+<h4>Creating a User</h4>
 
-<pre>
-crowd.user.active('user', function (err, res) {
-  if(err) {
-    throw err;
-  }
-  else {
-    console.log(res.toString());
-  }
-});
-</pre>
+<p>user.create(firstname, lastname, displayname, email, username, password, callback)  </p>
 
-<h3>User Group Membership</h3>
+<ul>
+<li>firstname String</li>
+<li>lastname String</li>
+<li>displayname String</li>
+<li>email String</li>
+<li>username String</li>
+<li>password String</li>
+<li>callback Function (err)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'Test'</span><span class="p">,</span> <span class="s1">'User'</span><span class="p">,</span> <span class="s1">'Test User'</span><span class="p">,</span> <span class="s1">'test@foo.bar'</span><span class="p">,</span> <span class="s1">'testuser'</span><span class="p">,</span> <span class="s1">'abc123'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Success"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-<p>user.groups(username, callback)<br>
-Callback contains two possible values. The first is an error obiect if the operation was not successful and the second is an Array of Group Names</p>
+<h4>Removing a User</h4>
 
-<pre>
-crowd.user.groups(username, function (err, res) {
-  if(err) {
-    throw err;
-  }
-  else {
-    console.log(res);
-  }
-});
-</pre>
+<p>user.remove(username, callback)  </p>
 
-<h4>Authentication</h4>
+<ul>
+<li>username String</li>
+<li>callback Function (err)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'testuser'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Success"</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-<p>user.authenticate(username, password, callback)<br>
-Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the user</p>
+<h4>List a Users Group Membership</h4>
 
-<pre>
-crowd.user.authenticate('user', 'password', function(err, res) {
-  if(err) { 
-    throw err;
-   }
-  else {
-    console.log(util.inspect(res, true));
-  }
-});
-</pre>
+<p>user.groups(username, callback)  </p>
+
+<ul>
+<li>username String</li>
+<li>callback Function (err, res)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">groups</span><span class="p">(</span><span class="s1">'testuser'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4>User Authentication (NON SSO)</h4>
+
+<p>user.authenticate(username, password, callback)  </p>
+
+<ul>
+<li>username String</li>
+<li>password String</li>
+<li>callback Function (err, res)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="s1">'testuser'</span><span class="p">,</span> <span class="s1">'abc123'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> 
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+   <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4>Changing a Users Password</h4>
+
+<p>user.changepassword(username, newpassword)</p>
+
+<ul>
+<li>username String</li>
+<li>newpassword String</li>
+<li>callback Function (err)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">changepassword</span><span class="p">(</span><span class="s1">'testuser'</span><span class="p">,</span> <span class="s1">'newpass'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Success"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
 <h3>Group Functions</h3>
 
-<h3>Find</h3>
+<p>Here you can find utilities for Managing, Creating, and Removing Groups.  </p>
 
-<p>group.find(groupname, callback)<br>
-Callback contains two possible values. The first is an error object if the operation was not successful and the second is an Object containing details about the group</p>
+<h4>Finding a Group</h4>
 
-<pre>
-<code>
-crowd.groups.find('crowd-administrators', function (err, res) {
-  if(err) {
-    throw err;
-  }
-  else {
-    console.log(util.inspect(res, true));
-  }
-});
-</code>
-</pre>
+<p>groups.find(groupname, callback)  </p>
 
-<h3>Create</h3>
+<ul>
+<li>groupname String</li>
+<li>callback Function (err, res)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'crowd-administrators'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-<p>group.create(name, description)
-Callback contains one possible value which is an error object if the operation was not successful.</p>
+<h4>Creating a Group</h4>
 
-<pre>
-crowd.groups.create("test-group", "Test Description", function(err) {
-  if(err) {
-    throw err;
-  }
-  else {
-    console.log("Success");
-  }
-});
-</pre>
+<p>groups.create(name, description, callback)</p>
 
-<h1>TODO</h1>
+<ul>
+<li>name String</li>
+<li>description String</li>
+<li>callback Function (err)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'test-group'</span><span class="p">,</span> <span class="s1">'Test Description'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Success"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4>Removing a Group</h4>
+
+<p>groups.remove(name, callback)</p>
+
+<ul>
+<li>name String</li>
+<li>callback Function (err)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">'test-group'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Success"</span><span class="p">);</span>
+  <span class="p">}</span>
+</pre></div>
+
+<h4>Adding a User to a Group</h4>
+
+<p>groups.addmember(username, group, callback)</p>
+
+<ul>
+<li>username String</li>
+<li>group String</li>
+<li>callback Function (err)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">addmember</span><span class="p">(</span><span class="s1">'testuser'</span><span class="p">,</span> <span class="s1">'test-group'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Success"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4>Removing a User from a Group</h4>
+
+<p>groups.removemember(username, group, callback)</p>
+
+<ul>
+<li>username String</li>
+<li>group String</li>
+<li>callback Function (err)</li>
+</ul><div class="highlight"><pre><span class="nx">crowd</span><span class="p">.</span><span class="nx">groups</span><span class="p">.</span><span class="nx">removemember</span><span class="p">(</span><span class="s1">'testuser'</span><span class="p">,</span> <span class="s1">'test-group'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Success"</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+<h4>Find the Direct Members of a Group</h4>
+
+<h4>Find the Nested Members of a Group</h4>
+
+<h3>Session Functions</h3>
+
+<p>Provides SSO Functionality</p>
+
+<h4>Create a new Session</h4>
+
+<h4>Authenticate</h4>
+
+<h4>Destroy</h4>
+
+<h2>TODO</h2>
 
 <ul>
 <li>Finish Docs</li>
