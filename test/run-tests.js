@@ -1,4 +1,4 @@
-var token;
+﻿var token;
 module.exports = {
   setUp: function(callback) {
     self = this;
@@ -6,8 +6,7 @@ module.exports = {
     var conf;
 
     var AtlassianCrowd = require('../lib/index');
-
-    // Detect if run from root or test directory
+    /* Try to load test.config file */
     try {
       conf = JSON.parse(require('fs').readFileSync('test/test.config').toString());
     }
@@ -60,12 +59,7 @@ module.exports = {
       throw new Error("Missing Required Test Configuration Group Description");
     }
 
-    var opts = {
-      crowd: { base: conf.crowd.base },
-      application: { "name": conf.application.name, "password": conf.application.password }
-    };
-
-    crowd = new AtlassianCrowd(opts);
+    crowd = new AtlassianCrowd(conf);
     callback();
   },
   tests: {
