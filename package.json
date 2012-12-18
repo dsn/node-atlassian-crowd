@@ -1,0 +1,36 @@
+{ 
+  "name": "atlassian-crowd",
+  "version": "0.0.1",
+  "main": "./lib/index.js",
+  "author": "Gary Steven <gsteven@ussearch.com>",
+  "license": "BSD",
+  "description": "A node.js module to communicate with Atlassian Crowd",
+  "bugs": {
+    "url": "https://github.com/dsn/node-atlassian-crowd/issues"
+  },
+  "engines": { 
+    "node": ">= 0.6.x"
+   },
+  "dependencies": { 
+    "libxmljs": "0.6.1",
+    "nodeunit": "0.7.4", 
+    "jshint": "0.9.1"
+   },
+  "bundledDependancies": [ 
+    "libxmljs", 
+    "nodeunit", 
+    "jshint" 
+  ],
+  "keywords": [ 
+    "atlassian", 
+    "crowd"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dsn/node-atlassian-crowd.git"
+  },
+  "scripts": {
+    "test": "node_modules/nodeunit/bin/nodeunit test/run-tests.js",
+    "lint": "node_modules/jshint/bin/hint lib/index.js lib/user.js lib/groups.js lib/session.js test/run-tests.js"
+  }
+}
