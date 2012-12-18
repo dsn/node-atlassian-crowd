@@ -1,6 +1,6 @@
 { 
   "name": "atlassian-crowd",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "./lib/index.js",
   "author": "Gary Steven <garys@darksidenetworks.com>",
   "license": "MIT",
