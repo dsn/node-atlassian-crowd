@@ -2,7 +2,6 @@
 module.exports = {
   setUp: function(callback) {
     self = this;
-    perr = false;
     var conf;
 
     var AtlassianCrowd = require('../lib/index');
@@ -185,7 +184,7 @@ module.exports = {
     },
     "User Find (Not Found)": function (test) {
       test.expect(1);
-      crowd.user.find('randomusernothere', function(err, res) {
+      crowd.user.find('randomusernothere', function(err) {
         if(err) {
           if(err.type === "USER_NOT_FOUND") {
             test.ok(true);
@@ -285,7 +284,7 @@ module.exports = {
     },
     "Session Destroy": function (test) {
       test.expect(1);
-      crowd.session.destroy(this.token, function (err, res) {
+      crowd.session.destroy(this.token, function (err) {
         if(err) {
           test.ok(false);
           test.done();
@@ -298,7 +297,7 @@ module.exports = {
     },
     "User Change Password": function (test) {
       test.expect(2);
-      crowd.user.changepassword(this.username, "newpassword", function (err, res) {
+      crowd.user.changepassword(this.username, "newpassword", function (err) {
         if(err) { 
           test.ok(false);
           test.done();
@@ -315,6 +314,34 @@ module.exports = {
               test.done();
             }
           });
+        }
+      });
+    },
+    "Search Users": function (test) {
+      test.expect(1);
+      var query = 'name = "' + this.username + '"';
+      crowd.search('user', query, function (err, res) {
+        if(err) {
+          test.ok(false);
+          test.done();
+        }
+        else {
+          test.equals(res.users[0].name, self.username);
+          test.done();
+        }
+      });
+    },
+    "Search Groups": function (test) {
+      test.expect(1);
+      var query = 'name = "' + this.group + '"';
+      crowd.search('group', query, function (err, res) {
+        if(err) {
+          test.ok(false);
+          test.done();
+        }
+        else {
+          test.equals(res.groups[0].name, self.group);
+          test.done();
         }
       });
     },

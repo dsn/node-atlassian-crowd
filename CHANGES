@@ -1,3 +1,7 @@
+v0.2.3 (12.18.2012)
+* Fixed context path problem
+* Added CQL Search Function
+
 v0.2.2 (12.18.2012)
 * NPM Related Changes
 
