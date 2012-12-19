@@ -1,4 +1,4 @@
-# Atlassian Crowd Library for node.js #
+# Atlassian Crowd Client for node.js #
 A node.js module for interacting with the Atlassian Crowd.
 
 Provides the ability to Add, Remove, and Manage Users and Groups as well as SSO functionality.
@@ -35,7 +35,7 @@ If you do not know these please ask your systems administrator.
 
 ## API ##
 
-### Testing Configuration and Connectivity ###
+#### Testing Configuration and Connectivity ####
 A simple function to check connectivity to Atlassian Crowd.
 
 ping(callback)
@@ -49,6 +49,38 @@ crowd.ping(function (err, res) {
   }
   else {
     console.log(res)
+  }
+});
+```
+
+#### Search Users or Groups ####
+Uses the Crowd Query Language  
+See [Crowd Query Language Documenation](https://developer.atlassian.com/display/CROWDDEV/Crowd+Query+Language) for more details  
+search(entityType, query, callback)
+
+* entityType String 'user' or 'group'
+* query String Crowd Query
+
+#### Search Users #####
+```javascript
+crowd.search('user', 'firstName="test*"', function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res);
+  }
+});
+```
+
+##### Search Groups #####
+```javascript
+crowd.search('group', 'name="*test*"', function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res);
   }
 });
 ```
