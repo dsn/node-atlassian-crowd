@@ -1,3 +1,7 @@
+v0.3.0 (12.19.2012)
+Convert requests to use a "Content-Type" of "application/json"
+Remove Dependancy on libxmljs
+
 v0.2.3 (12.18.2012)
 * Fixed context path problem
 * Added CQL Search Function
