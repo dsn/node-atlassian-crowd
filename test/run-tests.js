@@ -64,13 +64,18 @@ module.exports = {
   tests: {
     "Ping": function (test) {
       test.expect(1);
-      crowd.ping(function (err) {
+      crowd.ping(function (err, res) {
         if(err) {
           test.ok(false);
           test.done();
         }
         else {
-          test.ok(true);
+          if(res.secure.toString() === "true" || res.secure.toString() === "false") {
+            test.ok(true);
+          }
+          else {
+            test.ok(false);
+          }
           test.done();
         }
       });
