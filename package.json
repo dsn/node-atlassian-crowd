@@ -1,8 +1,11 @@
 { 
   "name": "atlassian-crowd",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "./lib/index.js",
   "author": "Gary Steven <garys@darksidenetworks.com>",
+  "contributors": [
+    { "name": "Teemu Matilainen", "email": "teemu.matilainen@iki.fi" }
+  ],
   "license": "MIT",
   "description": "A node.js module to communicate with Atlassian Crowd",
   "bugs": {
