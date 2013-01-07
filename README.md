@@ -13,8 +13,7 @@ See the [Atlassian Crowd Documentation (Adding an Application)](https://confluen
 var AtlassianCrowd = require('atlassian-crowd');
 var options = {
   "crowd": {
-    "base": "http://localhost", 
-    "port": 8080
+    "base": "http://localhost:8095/crowd"
   },
   "application": {
     "name": "my application",
@@ -30,8 +29,7 @@ If you do not know these please ask your systems administrator.
 
 `application.name` Application name as configured in Atlassian Crowd  
 `application.password` Application name as configured in Atlassian Crowd  
-`crowd.baseurl` Atlassian Crowd Base URL  
-`crowd.port` Atlassian Crowd Port  
+`crowd.base` Atlassian Crowd Base URL
 
 ## API ##
 
