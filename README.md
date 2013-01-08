@@ -11,6 +11,7 @@ See the [Atlassian Crowd Documentation (Adding an Application)](https://confluen
 ## Usage ##
 ```javascript
 var AtlassianCrowd = require('atlassian-crowd');
+
 var options = {
   "crowd": {
     "base": "http://localhost:8059/crowd/", 
@@ -137,7 +138,7 @@ crowd.user.create('Test', 'User', 'Test User', 'test@foo.bar', 'testuser', 'abc1
     throw err;
   }
   else {
-    console.log("Success")
+    console.log('Success')
   }
 });
 ```
@@ -154,7 +155,7 @@ crowd.user.remove('testuser', function(err) {
     throw err;
   }
   else {
-    console.log("Success")
+    console.log('Success')
   }
 });
 ```
@@ -207,7 +208,7 @@ crowd.user.changepassword('testuser', 'newpass', function (err) {
     throw err;
   }
   else {
-    console.log("Success");
+    console.log('Success');
   }
 });
 ```
@@ -245,7 +246,7 @@ crowd.groups.create('test-group', 'Test Description', function(err) {
     throw err;
   }
   else {
-    console.log("Success");
+    console.log('Success');
   }
 });
 ```
@@ -262,7 +263,7 @@ crowd.groups.remove('test-group', function (err) {
     throw err;
   }
   else {
-    console.log("Success");
+    console.log('Success');
   }
 ```
 
@@ -279,7 +280,7 @@ crowd.groups.addmember('testuser', 'test-group', function (err) {
     throw err;
   }
   else {
-    console.log("Success");
+    console.log('Success');
   }
 });
 ```
@@ -297,26 +298,91 @@ crowd.groups.removemember('testuser', 'test-group', function (err) {
     throw err;
   }
   else {
-    console.log("Success");
+    console.log('Success');
   }
 });
 ```
 
 #### Find the Direct Members of a Group ####
+groups.directmembers(groupname, callback)
+
+* groupname String
+* callback Function (err, res)
+
+crowd.groups.find('test-group', function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res);
+  }
+});
 
 #### Find the Nested Members of a Group ####
+groups.nestedmembers(groupname, callback)
+
+* groupname String
+* callback Function (err, res)
+
+crowd.groups.nestedmembers('test-group', function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res);
+  }
+});
 
 ### Session Functions ###
 Provides SSO Functionality
 
 #### Create a new Session ####
+session.create(username, password, callback)
+
+* username String
+* password String
+* remote_addr String (optional)
+* callback Function (err, res)
+
+crowd.session.create('testuser', 'secret', function (err, token) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(token);
+  }
+});
 
 #### Authenticate ####
+session.authenticate(token, remote_addr, callback)
+
+* token String
+* remote_addr String (optional)
+* callback Function (err, res)
+
+crowd.session.authenticate('xAbCd345', '192.168.1.100', function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res);
+  }
+});
 
 #### Destroy ####
+session.destroy(token, callback)
 
+* token String
+* callback Function (err)
 
+crowd.session.destroy('xAbCd345', function (err) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log('Successfully Destroyed Session');
+  }
+});
 
 ## TODO ##
-* Finish Docs
 * Update User Profile
