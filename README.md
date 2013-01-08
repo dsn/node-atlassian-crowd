@@ -309,6 +309,7 @@ groups.directmembers(groupname, callback)
 * groupname String
 * callback Function (err, res)
 
+```javascript
 crowd.groups.find('test-group', function (err, res) {
   if(err) {
     throw err;
@@ -317,6 +318,7 @@ crowd.groups.find('test-group', function (err, res) {
     console.log(res);
   }
 });
+```
 
 #### Find the Nested Members of a Group ####
 groups.nestedmembers(groupname, callback)
@@ -324,6 +326,7 @@ groups.nestedmembers(groupname, callback)
 * groupname String
 * callback Function (err, res)
 
+```javascript
 crowd.groups.nestedmembers('test-group', function (err, res) {
   if(err) {
     throw err;
@@ -332,6 +335,7 @@ crowd.groups.nestedmembers('test-group', function (err, res) {
     console.log(res);
   }
 });
+```
 
 ### Session Functions ###
 Provides SSO Functionality
@@ -344,6 +348,7 @@ session.create(username, password, callback)
 * remote_addr String (optional)
 * callback Function (err, res)
 
+```javascript
 crowd.session.create('testuser', 'secret', function (err, token) {
   if(err) {
     throw err;
@@ -352,6 +357,7 @@ crowd.session.create('testuser', 'secret', function (err, token) {
     console.log(token);
   }
 });
+```
 
 #### Authenticate ####
 session.authenticate(token, remote_addr, callback)
@@ -360,6 +366,7 @@ session.authenticate(token, remote_addr, callback)
 * remote_addr String (optional)
 * callback Function (err, res)
 
+```javascript
 crowd.session.authenticate('xAbCd345', '192.168.1.100', function (err, res) {
   if(err) {
     throw err;
@@ -368,6 +375,7 @@ crowd.session.authenticate('xAbCd345', '192.168.1.100', function (err, res) {
     console.log(res);
   }
 });
+```
 
 #### Destroy ####
 session.destroy(token, callback)
@@ -375,6 +383,7 @@ session.destroy(token, callback)
 * token String
 * callback Function (err)
 
+```javascript
 crowd.session.destroy('xAbCd345', function (err) {
   if(err) {
     throw err;
@@ -383,6 +392,7 @@ crowd.session.destroy('xAbCd345', function (err) {
     console.log('Successfully Destroyed Session');
   }
 });
+```
 
 ## TODO ##
 * Update User Profile
