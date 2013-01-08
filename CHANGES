@@ -1,3 +1,6 @@
+v0.4.1 (01.01.2013)
+* Updated README
+
 v0.4.0 (01.07.2013)
 * Moved API Version and Path to Global Settings
 * Change API Version from latest to v1 to prevent breakage on changes from Atlassian
