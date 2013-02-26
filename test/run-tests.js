@@ -121,6 +121,19 @@ module.exports = {
        }
       });
     },
+    "Group Active": function (test) {
+      test.expect(1);
+      crowd.groups.active(this.group, function(err, res) {
+        if(err) {
+          test.ok(false);
+          test.done();
+       }
+       else {
+         test.ok(res);
+         test.done();
+       }
+      });
+    },
     "Group Add Member": function (test) {
       test.expect(1);
       crowd.groups.addmember(this.username, this.group, function(err) {

@@ -1,3 +1,11 @@
+v0.4.3 (02.26.2013)
+* Bug Fix for NGiNX (tmatilai)
+
+v0.4.2 (02.11.2013)
+* Styling Fixes
+* Added "groups.active"
+* Updated README
+
 v0.4.1 (01.01.2013)
 * Updated README
 
