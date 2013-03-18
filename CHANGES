@@ -1,3 +1,6 @@
+v0.4.4 (03.18.2013)
+* Bug Fix Removing Invalid Session (pejuam)
+
 v0.4.3 (02.26.2013)
 * Bug Fix for NGiNX (tmatilai)
 
