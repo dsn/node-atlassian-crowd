@@ -4,7 +4,7 @@
   "main": "./lib/index.js",
   "author": "Gary Steven <garys@darksidenetworks.com>",
   "contributors": [
-    { "name": "Teemu Matilainen", "email": "teemu.matilainen@iki.fi" }
+    { "name": "Teemu Matilainen", "email": "teemu.matilainen@iki.fi" },
     { "name": "Petri Ämmälä" }
   ],
   "license": "MIT",
