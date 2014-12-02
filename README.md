@@ -88,13 +88,29 @@ crowd.search('group', 'name="*test*"', function (err, res) {
 Here you can find utilities for Managing, Creating, Removing, Users as well as Changing Passwords, and Basic Authentication (NON SSO).
 
 #### Finding a User by Username ####
-user.find(userrname, callback)
+user.find(username, callback)
 
 * username String
 * callback Function (err, res)
 
 ```javascript
 crowd.user.find('user', function(err, res) {
+  if(err) { 
+    throw err;
+   }
+  else {
+    console.log(res);
+  }
+});
+```
+#### Finding a User by Username (and return user's attributes) ####
+user.findWithAttributes(username, callback)
+
+* username String
+* callback Function (err, res)
+
+```javascript
+crowd.user.findWithAttributes('user', function(err, res) {
   if(err) { 
     throw err;
    }
@@ -171,6 +187,63 @@ crowd.user.groups('testuser', function (err, res) {
   if(err) {
     throw err;
   }
+  else {
+    console.log(res);
+  }
+});
+```
+
+#### List a User's Attributes ####
+user.getAttributes(username, callback)
+
+* username String
+* callback Function (err, res)
+
+```javascript
+crowd.user.getAttributes('user', function(err, res) {
+  if(err) { 
+    throw err;
+   }
+  else {
+    console.log(res);
+  }
+});
+```
+
+#### Modify/Add User Attributes ####
+user.postAttributes(username, attributes, callback)
+
+* username String
+* attributes array of objects in the format:
+*    {
+*      "name" : "attributeName",
+*      "values" : [ "arrayOfArbitraryValues" ]
+*    }
+* callback Function (err, res)
+
+```javascript
+crowd.user.postAttributes('user', arrayOfAttributes, function(err, res) {
+  if(err) { 
+    throw err;
+   }
+  else {
+    console.log(res);
+  }
+});
+```
+
+#### Delete a User's Attribute ####
+user.deleteAttributes(username, attributeName, callback)
+
+* username String
+* attributeName String
+* callback Function (err, res)
+
+```javascript
+crowd.user.deleteAttributes('user', 'attribute-name', function(err, res) {
+  if(err) { 
+    throw err;
+   }
   else {
     console.log(res);
   }
