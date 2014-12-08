@@ -201,6 +201,7 @@ user.setAttributes(username, name, values, callback)
 
 * username String
 * name String
+* values String **or** Array
 * callback Function (err, res)
 
 ```javascript
@@ -219,7 +220,6 @@ user.removeAttribute(username, name, values, callback)
 
 * username String
 * name String
-* values String **or** Array
 * callback Function (err, res)
 
 ```javascript
