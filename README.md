@@ -179,6 +179,60 @@ crowd.user.groups('testuser', function (err, res) {
 });
 ```
 
+#### List a Users Attributes ####
+user.attributes(username, callback)
+
+* username String
+* callback Function (err, res) 
+   
+```javascript
+crowd.user.attributes('testuser', function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res);
+  }
+});
+```
+
+#### Set a New Attribute to a User ####
+user.setAttributes(username, name, values, callback)
+
+* username String
+* name String
+* values String **or** Array
+* callback Function (err, res)
+
+```javascript
+crowd.user.removeAttribute('testuser', 'attributeName', function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res);
+  }
+});
+```
+
+#### Remove an Attribute From a User ####
+user.removeAttribute(username, name, values, callback)
+
+* username String
+* name String
+* callback Function (err, res)
+
+```javascript
+crowd.user.attributes('testuser', 'attributeName', 'attributeValue', function (err, res) {
+  if(err) {
+    throw err;
+  }
+  else {
+    console.log(res);
+  }
+});
+```
+
 #### User Authentication (NON SSO) ####
 user.authenticate(username, password, callback)  
 
