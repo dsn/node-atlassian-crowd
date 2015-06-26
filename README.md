@@ -16,7 +16,7 @@ var AtlassianCrowd = require('atlassian-crowd');
 
 var options = {
   "crowd": {
-    "base": "http://localhost:8059/crowd/", 
+    "base": "http://localhost:8059/crowd/" 
   },
   "application": {
     "name": "my application",
