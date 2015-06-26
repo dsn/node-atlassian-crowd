@@ -25,6 +25,7 @@ module.exports = {
     this.username    = conf.test.username;
     this.password    = conf.test.password;
     this.group       = conf.test.group;
+    this.groupNested = conf.test.groupNested;
     this.groupdesc   = conf.test.groupdesc;
 
     this.token = token;
@@ -96,6 +97,32 @@ module.exports = {
     "Group Create": function(test) {
       test.expect(1);
       crowd.groups.create(this.group, this.groupdesc, function(err) {
+        if(err) {
+          test.ok(false);
+          test.done();
+        }
+        else {
+          test.ok(true);
+          test.done();
+        }
+      });
+    },
+    "Create Group For Nesting": function(test) {
+      test.expect(1);
+      crowd.groups.create(this.groupNested, this.groupdesc, function(err) {
+        if(err) {
+          test.ok(false);
+          test.done();
+        }
+        else {
+          test.ok(true);
+          test.done();
+        }
+      });
+    },
+    "Create Group Nest": function(test) {
+      test.expect(1);
+      crowd.groups.createNested(this.group, this.groupNested, this.groupdesc, function(err) {
         if(err) {
           test.ok(false);
           test.done();
@@ -316,7 +343,7 @@ module.exports = {
     "User Change Password": function (test) {
       test.expect(2);
       crowd.user.changepassword(this.username, "newpassword", function (err) {
-        if(err) { 
+        if(err) {
           test.ok(false);
           test.done();
         }
@@ -379,6 +406,19 @@ module.exports = {
     "Group Delete": function (test) {
       test.expect(1);
       crowd.groups.remove(this.group, function(err) {
+        if(err) {
+          test.ok(false);
+          test.done();
+        }
+        else {
+          test.ok(true);
+          test.done();
+        }
+      });
+    },
+    "Nested Group Delete": function (test) {
+      test.expect(1);
+      crowd.groups.remove(this.groupNested, function(err) {
         if(err) {
           test.ok(false);
           test.done();
