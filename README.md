@@ -1,4 +1,4 @@
-I lost access to my crowd server awhile ago and things more or less stopped here, however I have had a handful of requets lately so I am going to restart this project when I get a few moments of free time.
+I lost access to my crowd server awhile ago and things more or less stopped here. Check out a new version written to utilize promises and ES6 https://github.com/wehkamp/atlassian-crowd-client
 
 # Atlassian Crowd Client for node.js #
 A node.js module for interacting with the Atlassian Crowd.
