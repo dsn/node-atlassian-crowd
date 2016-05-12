@@ -207,7 +207,7 @@ user.setAttributes(username, name, values, callback)
 * callback Function (err, res)
 
 ```javascript
-crowd.user.removeAttribute('testuser', 'attributeName', function (err, res) {
+crowd.user.setAttributes('testuser', 'attributeName', 'attributeValue', function (err, res) {
   if(err) {
     throw err;
   }
@@ -225,7 +225,7 @@ user.removeAttribute(username, name, values, callback)
 * callback Function (err, res)
 
 ```javascript
-crowd.user.attributes('testuser', 'attributeName', 'attributeValue', function (err, res) {
+crowd.user.removeAttribute('testuser', 'attributeName', function (err, res) {
   if(err) {
     throw err;
   }
